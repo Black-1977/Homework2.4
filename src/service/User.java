@@ -1,6 +1,7 @@
 package service;
 
 import service.exceptions.*;
+
 import java.io.*;
 
 public class User {
@@ -35,6 +36,9 @@ public class User {
 
         System.out.print("Введите логин: ");
         String login = br.readLine();
+        if (login.length() > 20) {
+            throw new WrongLoginException();
+        }
         for (int i = 0; i < login.length(); i++) {
             if (allowedSymbols.indexOf(login.charAt(i)) == -1) {
                 throw new WrongLoginException();
@@ -48,6 +52,9 @@ public class User {
 
         System.out.print("Введите пароль: ");
         String password = br.readLine();
+        if (password.length() > 20) {
+            throw new WrongPasswordException();
+        }
         for (int i = 0; i < password.length(); i++) {
             if (allowedSymbols.indexOf(password.charAt(i)) == -1) {
                 throw new WrongPasswordException();
