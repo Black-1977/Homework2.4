@@ -31,25 +31,23 @@ public class Main {
     }
 
     public static void checkUserDate(String login, String password, String passwordConfirm) throws WrongLoginException, WrongPasswordException {
-        final String allowedSymbols = "0987654321_ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
-        if (login.length() > 20) {
+
+        if (login.length() > 20 || !checkAllowedSymbols(login)) {
             throw new WrongLoginException();
         }
-        for (int i = 0; i < login.length(); i++) {
-            if (allowedSymbols.indexOf(login.charAt(i)) == -1) {
-                throw new WrongLoginException();
-            }
-        }
-        if (password.length() > 20) {
+
+        if (password.length() > 20 || !checkAllowedSymbols(password) || !password.equals(passwordConfirm)) {
             throw new WrongPasswordException();
         }
-        for (int i = 0; i < password.length(); i++) {
-            if (allowedSymbols.indexOf(password.charAt(i)) == -1) {
-                throw new WrongPasswordException();
+    }
+
+    public static boolean checkAllowedSymbols(String str) {
+        final String allowedSymbols = "0987654321_ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+        for (int i = 0; i < str.length(); i++) {
+            if (allowedSymbols.indexOf(str.charAt(i)) == -1) {
+                return false;
             }
         }
-        if (!password.equals(passwordConfirm)) {
-            throw new WrongPasswordException();
-        }
+        return true;
     }
 }
